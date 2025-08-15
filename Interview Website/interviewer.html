@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interviewer Trainer</title>
+  <link rel="stylesheet" href="interviewer.css" />
+</head>
+<body>
+  <!-- Difficulty Gate -->
+  <div id="difficultySelect" class="gate">
+    <div class="gate-card">
+      <h1 id="courseTitle" class="title">Course: …</h1>
+      <p class="subtitle">Pick a difficulty to begin your interview session</p>
+      <div class="difficulty-buttons">
+        <button class="diff-btn" onclick="startGame('easy')" disabled>Easy</button>
+        <button class="diff-btn" onclick="startGame('normal')" disabled>Normal</button>
+        <button class="diff-btn" onclick="startGame('hard')" disabled>Hard</button>
+      </div>
+      <p class="hint">Loads from <code>interview-questions.json</code>. Add/edit there—no JS changes needed.</p>
+    </div>
+  </div>
+
+  <!-- Top bar -->
+  <header id="topInfoContainer" class="topbar">
+    <div id="topInfo" class="crumb">Course : Difficulty</div>
+    <div class="round"><span id="roundDisplay">Round: 1 / 10</span></div>
+    <div class="timer-wrap">
+      <div class="timer-row">
+        <span id="timerDisplay">60s</span>
+      </div>
+      <div class="timer-bar"><div id="timerBar"></div></div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="wrap">
+    <!-- Cards -->
+    <section class="cards">
+      <div class="card" id="card1" aria-label="Scenario card 1">
+        <div class="card-inner">
+          <div class="card-front">Flip</div>
+          <div class="card-back"></div>
+        </div>
+      </div>
+      <div class="card" id="card2" aria-label="Scenario card 2">
+        <div class="card-inner">
+          <div class="card-front">Flip</div>
+          <div class="card-back"></div>
+        </div>
+      </div>
+      <div class="card" id="card3" aria-label="Scenario card 3">
+        <div class="card-inner">
+          <div class="card-front">Flip</div>
+          <div class="card-back"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scenario & Candidate Answer -->
+    <section id="scenarioSection" class="qa">
+      <p id="scenarioText" class="q"></p>
+      <div id="candidateBlock" class="candidate">
+        <h4>Candidate’s Answer</h4>
+        <div id="candidateAnswer" class="bubble"></div>
+      </div>
+      <div class="choices">
+        <button class="choice hire"   onclick="choose('Hire')">Hire</button>
+        <button class="choice maybe"  onclick="choose('Maybe')">Maybe</button>
+        <button class="choice reject" onclick="choose('Reject')">Reject</button>
+      </div>
+    </section>
+
+    <!-- Log -->
+    <aside class="log">
+      <h3>Decision Log</h3>
+      <div id="decisionLog" class="log-body">
+        <p class="muted"><em>Your decisions will appear here…</em></p>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Results -->
+  <section id="results" class="results">
+    <div class="results-card">
+      <h2>Interview Summary</h2>
+      <div id="summary" class="summary-list"></div>
+      <!-- Placeholder for future AI evaluation summary -->
+      <div class="ai-placeholder">
+        <p class="muted">
+          (AI feedback area — when you add an API, map <code>sessionDecisions</code> here for strengths/weaknesses.)
+        </p>
+      </div>
+      <a class="primary outline" href="index.html">Back to Home</a>
+    </div>
+  </section>
+
+  <script src="interviewer.js"></script>
+</body>
+</html>
+

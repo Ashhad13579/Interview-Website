@@ -1,0 +1,196 @@
+{
+    "Web Development": {
+      "easy":[
+        {"id":1,"question":"What is HTML?","time":20},
+        {"id":2,"question":"Define CSS.","time":20},
+        {"id":3,"question":"What is a web browser?","time":20},
+        {"id":4,"question":"What is a hyperlink?","time":20}
+      ],
+      "normal":[
+        {"id":5,"question":"Explain responsive design.","time":30},
+        {"id":6,"question":"What is the difference between inline and block elements?","time":30},
+        {"id":7,"question":"Explain the box model in CSS.","time":30}
+      ],
+      "hard":[
+        {"id":8,"question":"Explain flexbox and its main properties.","time":45},
+        {"id":9,"question":"Describe CSS Grid layout.","time":45},
+        {"id":10,"question":"Explain how CSS specificity works.","time":45}
+      ]
+    },
+    "Data Science": {
+      "easy":[
+        {"id":11,"question":"What is data science?","time":20},
+        {"id":12,"question":"Define dataset.","time":20},
+        {"id":13,"question":"What is data cleaning?","time":20}
+      ],
+      "normal":[
+        {"id":14,"question":"Explain supervised learning.","time":30},
+        {"id":15,"question":"Explain unsupervised learning.","time":30},
+        {"id":16,"question":"What is feature engineering?","time":30}
+      ],
+      "hard":[
+        {"id":17,"question":"Explain cross-validation.","time":45},
+        {"id":18,"question":"What is overfitting?","time":45},
+        {"id":19,"question":"Explain model evaluation metrics.","time":45}
+      ]
+    },
+    "Computer Science": {
+      "easy":[
+        {"id":20,"question":"What is a variable?","time":20},
+        {"id":21,"question":"Define a function.","time":20},
+        {"id":22,"question":"What is a loop?","time":20}
+      ],
+      "normal":[
+        {"id":23,"question":"Explain object-oriented programming.","time":30},
+        {"id":24,"question":"What is recursion?","time":30},
+        {"id":25,"question":"Define data structure.","time":30}
+      ],
+      "hard":[
+        {"id":26,"question":"Explain algorithm complexity.","time":45},
+        {"id":27,"question":"What is a memory leak?","time":45},
+        {"id":28,"question":"Explain stack vs heap memory.","time":45}
+      ]
+    },
+    "Machine Learning": {
+      "easy":[
+        {"id":29,"question":"What is machine learning?","time":20},
+        {"id":30,"question":"Define supervised learning.","time":20},
+        {"id":31,"question":"Define unsupervised learning.","time":20}
+      ],
+      "normal":[
+        {"id":32,"question":"Explain regression vs classification.","time":30},
+        {"id":33,"question":"What is a decision tree?","time":30},
+        {"id":34,"question":"Explain overfitting and underfitting.","time":30}
+      ],
+      "hard":[
+        {"id":35,"question":"Explain gradient descent.","time":45},
+        {"id":36,"question":"What is a neural network?","time":45},
+        {"id":37,"question":"Explain regularization techniques.","time":45}
+      ]
+    },
+    "Networking": {
+      "easy":[
+        {"id":38,"question":"What is a network?","time":20},
+        {"id":39,"question":"Define IP address.","time":20},
+        {"id":40,"question":"What is a router?","time":20}
+      ],
+      "normal":[
+        {"id":41,"question":"Explain TCP vs UDP.","time":30},
+        {"id":42,"question":"What is DNS?","time":30},
+        {"id":43,"question":"Explain subnetting.","time":30}
+      ],
+      "hard":[
+        {"id":44,"question":"Explain OSI model layers.","time":45},
+        {"id":45,"question":"What is NAT?","time":45},
+        {"id":46,"question":"Explain VLANs and their uses.","time":45}
+      ]
+    },
+    "Cyber Security": {
+      "easy":[
+        {"id":47,"question":"What is cybersecurity?","time":20},
+        {"id":48,"question":"Define malware.","time":20},
+        {"id":49,"question":"What is phishing?","time":20}
+      ],
+      "normal":[
+        {"id":50,"question":"Explain firewalls.","time":30},
+        {"id":51,"question":"What is encryption?","time":30},
+        {"id":52,"question":"Define two-factor authentication.","time":30}
+      ],
+      "hard":[
+        {"id":53,"question":"Explain penetration testing.","time":45},
+        {"id":54,"question":"What is a zero-day exploit?","time":45},
+        {"id":55,"question":"Explain security audits.","time":45}
+      ]
+    },
+    "Software Engineering": {
+      "easy":[
+        {"id":56,"question":"What is software engineering?","time":20},
+        {"id":57,"question":"Define SDLC.","time":20},
+        {"id":58,"question":"What is version control?","time":20}
+      ],
+      "normal":[
+        {"id":59,"question":"Explain agile methodology.","time":30},
+        {"id":60,"question":"What is unit testing?","time":30},
+        {"id":61,"question":"Explain code review process.","time":30}
+      ],
+      "hard":[
+        {"id":62,"question":"Explain design patterns.","time":45},
+        {"id":63,"question":"What is continuous integration?","time":45},
+        {"id":64,"question":"Explain software architecture types.","time":45}
+      ]
+    },
+    "Cloud Computing": {
+      "easy":[
+        {"id":65,"question":"What is cloud computing?","time":20},
+        {"id":66,"question":"Define SaaS.","time":20},
+        {"id":67,"question":"Define IaaS.","time":20}
+      ],
+      "normal":[
+        {"id":68,"question":"Explain PaaS.","time":30},
+        {"id":69,"question":"What is virtualization?","time":30},
+        {"id":70,"question":"Explain cloud deployment models.","time":30}
+      ],
+      "hard":[
+        {"id":71,"question":"Explain serverless architecture.","time":45},
+        {"id":72,"question":"What is cloud security best practices?","time":45},
+        {"id":73,"question":"Explain hybrid cloud vs multi-cloud.","time":45}
+      ]
+    },
+    "Mobile App Development": {
+      "easy":[
+        {"id":74,"question":"What is a mobile app?","time":20},
+        {"id":75,"question":"Define native app.","time":20},
+        {"id":76,"question":"Define hybrid app.","time":20}
+      ],
+      "normal":[
+        {"id":77,"question":"Explain app lifecycle.","time":30},
+        {"id":78,"question":"What is responsive design in apps?","time":30},
+        {"id":79,"question":"Explain cross-platform development.","time":30}
+      ],
+      "hard":[
+        {"id":80,"question":"Explain app performance optimization.","time":45},
+        {"id":81,"question":"What is app security best practices?","time":45},
+        {"id":82,"question":"Explain app deployment process.","time":45}
+      ]
+    },
+    "Database Management": {
+      "easy":[
+        {"id":83,"question":"What is a database?","time":20},
+        {"id":84,"question":"Define SQL.","time":20},
+        {"id":85,"question":"What is a table?","time":20}
+      ],
+      "normal":[
+        {"id":86,"question":"Explain primary key vs foreign key.","time":30},
+        {"id":87,"question":"What is indexing?","time":30},
+        {"id":88,"question":"Explain normalization.","time":30}
+      ],
+      "hard":[
+        {"id":89,"question":"Explain ACID properties.","time":45},
+        {"id":90,"question":"What is transaction management?","time":45},
+        {"id":91,"question":"Explain database sharding.","time":45}
+      ]
+    },
+    "curveball":[
+      {"id":1001,"question":"Describe a time you faced a team conflict.","time":40},
+      {"id":1002,"question":"How would you handle a missed deadline?","time":40},
+      {"id":1003,"question":"Explain a situation where you led a project.","time":45},
+      {"id":1004,"question":"How do you handle criticism?","time":35},
+      {"id":1005,"question":"What is your approach to learning new technologies?","time":35},
+      {"id":1006,"question":"Describe a challenge you overcame at work.","time":40},
+      {"id":1007,"question":"How do you manage stress?","time":35},
+      {"id":1008,"question":"Explain a time you solved a problem creatively.","time":40},
+      {"id":1009,"question":"How do you prioritize tasks under pressure?","time":35},
+      {"id":1010,"question":"Describe a time you failed and learned from it.","time":40},
+      {"id":1011,"question":"Explain how you handle tight deadlines.","time":35},
+      {"id":1012,"question":"How do you motivate a team?","time":40},
+      {"id":1013,"question":"Describe a time you disagreed with a supervisor.","time":40},
+      {"id":1014,"question":"How do you approach risk-taking?","time":35},
+      {"id":1015,"question":"Explain a project where you improved efficiency.","time":40},
+      {"id":1016,"question":"How do you handle multiple stakeholders?","time":35},
+      {"id":1017,"question":"Describe a time you adapted to change quickly.","time":40},
+      {"id":1018,"question":"How do you make decisions under uncertainty?","time":45},
+      {"id":1019,"question":"Describe a situation where you mentored someone.","time":35},
+      {"id":1020,"question":"How do you handle confidential information?","time":40}
+    ]
+  }
+  
