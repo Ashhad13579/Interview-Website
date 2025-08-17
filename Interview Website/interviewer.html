@@ -65,9 +65,15 @@
         <div id="candidateAnswer" class="bubble"></div>
       </div>
       <div class="choices">
-        <button class="choice hire"   onclick="choose('Hire')">Hire</button>
-        <button class="choice maybe"  onclick="choose('Maybe')">Maybe</button>
-        <button class="choice reject" onclick="choose('Reject')">Reject</button>
+        <button class="choice hire"   onclick="promptWhy('Hire')">Hire</button>
+        <button class="choice maybe"  onclick="promptWhy('Maybe')">Maybe</button>
+        <button class="choice reject" onclick="promptWhy('Reject')">Reject</button>
+      </div>
+      <!-- Why Box -->
+      <div id="whyBox" class="why-box" style="display:none;">
+        <label for="whyInput"><strong>Why?</strong> (this helps with your AI evaluation later)</label>
+        <textarea id="whyInput" rows="2" placeholder="Optional reason..."></textarea>
+        <button onclick="submitDecision()">Submit</button>
       </div>
     </section>
 
@@ -85,7 +91,6 @@
     <div class="results-card">
       <h2>Interview Summary</h2>
       <div id="summary" class="summary-list"></div>
-      <!-- Placeholder for future AI evaluation summary -->
       <div class="ai-placeholder">
         <p class="muted">
           (AI feedback area — when you add an API, map <code>sessionDecisions</code> here for strengths/weaknesses.)
@@ -98,4 +103,3 @@
   <script src="interviewer.js"></script>
 </body>
 </html>
-
