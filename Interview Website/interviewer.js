@@ -7,7 +7,8 @@ document.getElementById('courseTitle').textContent = 'Course: ' + selectedCourse
 let bank = {}, jsonLoaded = false;
 let rounds = [], currentRound = 0, totalRounds = 10;
 let defaultTime = 60, timerInterval = null, timeLeft = 0, totalTime = 0;
-let sessionDecisions = []; // {id, scenario, candidate, decision}
+let sessionDecisions = []; // {id, scenario, candidate, decision, reason, auto}
+let pendingDecision = null; // for Why box
 
 // --- Stress events (optional) ---
 const stressEvents = [
@@ -17,32 +18,54 @@ const stressEvents = [
   { type:'penalty', seconds:8,  message:'Time constraint: -8s' }
 ];
 
-// --- Load interview questions ---
-fetch('interview-questions.json')
-  .then(r=>r.json())
+// --- Load interview questions (hard fail if missing) ---
+fetch('interviewer-questions.json')
+  .then(r=>{
+    if(!r.ok) throw new Error('Missing interviewer-questions.json');
+    return r.json();
+  })
   .then(data=>{
     bank = data;
     jsonLoaded = true;
-    document.querySelectorAll('.diff-btn').forEach(b=>b.disabled=false);
+    // enable difficulty buttons only when correct course exists
+    const hasCourse = !!(bank[selectedCourse]);
+    document.querySelectorAll('.diff-btn').forEach(b=> b.disabled = !(jsonLoaded && hasCourse));
+    if(!hasCourse){
+      document.querySelector('.hint').innerHTML = `Course "<code>${selectedCourse}</code>" not found in <code>interviewer-questions.json</code>. Pick another link.`;
+    }
   })
-  .catch(err=>console.error('Error loading interview-questions.json', err));
+  .catch(err=>{
+    console.error(err);
+    document.querySelector('.hint').innerHTML =
+      `⚠️ Couldn’t load <code>interviewer-questions.json</code>. Make sure you opened from the correct folder/link.`;
+  });
 
 // --- Start session ---
 function startGame(difficulty){
   if(!jsonLoaded){ alert('Questions are still loading…'); return; }
+  const courseObj = bank[selectedCourse];
+  if(!courseObj){ alert('Course not found in interviewer-questions.json'); return; }
+
   document.getElementById('difficultySelect').style.display='none';
   document.getElementById('topInfo').textContent = `${selectedCourse} : ${difficulty}`;
 
   // difficulty → base time
   defaultTime = (difficulty==='easy')?75 : (difficulty==='normal')?60 : 45;
 
-  const pool = (bank[selectedCourse] && bank[selectedCourse][difficulty]) || [];
-  if(!pool.length){ alert('No interview scenarios found for this course/difficulty.'); return; }
+  // accept both old (with difficulty buckets) and flat arrays
+  let pool = [];
+  if (Array.isArray(courseObj)) {
+    pool = courseObj; // flat list
+  } else if (courseObj[difficulty]) {
+    pool = courseObj[difficulty];
+  }
 
-  // choose 10 with replacement (simple)
+  if(!pool.length){ alert('No interview scenarios found for this course/difficulty.'); location.href='index.html'; return; }
+
+  // choose totalRounds with replacement
   rounds = Array.from({length: totalRounds}, ()=> pool[Math.floor(Math.random()*pool.length)]);
 
-  // inject 2 curveballs if available
+  // inject up to 2 curveballs if available
   const curve = bank.curveball || [];
   for(let i=0;i<2 && curve.length;i++){
     rounds[Math.floor(Math.random()*totalRounds)] = curve[Math.floor(Math.random()*curve.length)];
@@ -62,7 +85,7 @@ function showRound(){
     const c = document.getElementById(id);
     c.classList.remove('flipped');
     c.style.pointerEvents='auto';
-    c.querySelector('.card-back').textContent='';
+    c.querySelector('.card-back').textContent=''; // cleared until flipped
   });
 
   // click to flip
@@ -72,22 +95,27 @@ function showRound(){
   const bar = document.getElementById('timerBar');
   bar.style.transition='none'; bar.style.width='100%';
   document.body.classList.remove('low-time');
+
+  // hide Why box if still visible
+  document.getElementById('whyBox').style.display='none';
+  document.getElementById('whyInput').value = '';
 }
 
 // --- Flip card & show scenario+candidate ---
 function flipCard(cardId){
   const card = document.getElementById(cardId);
   const item = rounds[currentRound];
+  const textScenario = item.scenario || item.question || '(no prompt provided)';
 
-  card.querySelector('.card-back').textContent = item.scenario;
+  card.querySelector('.card-back').textContent = textScenario;
   card.classList.add('flipped');
 
   // disable other cards
   ['card1','card2','card3'].forEach(id=> document.getElementById(id).style.pointerEvents='none');
 
   // show block
-  document.getElementById('scenarioText').textContent = item.scenario;
-  document.getElementById('candidateAnswer').textContent = item.candidate;
+  document.getElementById('scenarioText').textContent = textScenario;
+  document.getElementById('candidateAnswer').textContent = item.candidate || '';
   document.getElementById('scenarioSection').style.display='block';
 
   // start timer
@@ -125,7 +153,7 @@ function startTimer(seconds){
     if(timeLeft<=0){
       clearInterval(timerInterval);
       showTimeUpVisual();
-      // no decision → auto 'Maybe' (or change to Reject if you prefer)
+      // time out → auto 'Maybe', no Why box
       setTimeout(()=> choose('Maybe', true), 350);
     }
   }, 20);
@@ -143,7 +171,6 @@ function triggerRandomEvent(duration=3000){
   cards.classList.add('shake');
 
   if(ev.type==='speed'){
-    // compress remaining time by factor (faster drain)
     timeLeft = timeLeft / ev.factor;
     totalTime = Math.max(timeLeft, 1);
   }else if(ev.type==='bonus'){
@@ -168,25 +195,53 @@ function showTimeUpVisual(){
   setTimeout(()=>cards.classList.remove('time-up'), 650);
 }
 
-// --- Decision ---
-function choose(decision, auto=false){
+// --- Decision flow (with Why box) ---
+function promptWhy(decision){
+  // stop timer; store pending decision; show why box
+  clearInterval(timerInterval);
+  pendingDecision = decision;
+  document.getElementById('whyBox').style.display='block';
+  document.getElementById('whyInput').value = '';
+}
+
+function submitDecision(){
+  const reason = (document.getElementById('whyInput').value || '').trim();
+  choose(pendingDecision || 'Maybe', false, reason);
+}
+
+function choose(decision, auto=false, reason=''){
   clearInterval(timerInterval);
   const item = rounds[currentRound];
+  const textScenario = item.scenario || item.question || '(no prompt provided)';
+
+  // if this was an auto timeout, bypass why box
+  if(auto){
+    reason = '';
+    document.getElementById('whyBox').style.display='none';
+  }
 
   // store decision
   sessionDecisions.push({
-    id: item.id, scenario: item.scenario, candidate: item.candidate,
-    decision, auto
+    id: item.id,
+    scenario: textScenario,
+    candidate: item.candidate || '',
+    decision,
+    reason,
+    auto
   });
 
   // log
   const log = document.getElementById('decisionLog');
   const p = document.createElement('p');
   const tag = auto ? ' (auto)' : '';
-  p.innerHTML = `<strong>Q${currentRound+1}:</strong> <span class="muted">${decision}${tag}</span>`;
+  p.innerHTML = `<strong>Q${currentRound+1}:</strong> 
+    <span class="muted">${decision}${tag}</span>
+    ${reason ? ` — <em>${reason.replace(/</g,'&lt;')}</em>` : ''}`;
   log.prepend(p);
 
+  // next
   currentRound++;
+  pendingDecision = null;
   if(currentRound >= totalRounds) showResults();
   else showRound();
 }
@@ -203,14 +258,18 @@ function showResults(){
     el.innerHTML = `
       <strong>Q${i+1}:</strong> ${d.scenario}<br>
       <span class="muted">Candidate:</span> ${d.candidate}<br>
-      <span class="muted">Your decision:</span> <strong>${d.decision}${d.auto?' (auto)':''}</strong>
+      <span class="muted">Your decision:</span> <strong>${d.decision}${d.auto?' (auto)':''}</strong><br>
+      <span class="muted">Reason:</span> ${d.reason ? d.reason.replace(/</g,'&lt;') : '(none)'}
     `;
     summary.appendChild(el);
   });
 
-  // Later, send sessionDecisions to your AI and display feedback here.
-  // fetch('/api/evaluate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ decisions: sessionDecisions })})
-  //   .then(r=>r.json()).then(feedback => { /* render feedback */ });
+  // Example payload you can POST later:
+  // fetch('/api/evaluate', {
+  //   method:'POST',
+  //   headers:{'Content-Type':'application/json'},
+  //   body: JSON.stringify({ course: selectedCourse, decisions: sessionDecisions })
+  // });
 
   document.getElementById('results').style.display='grid';
 }
