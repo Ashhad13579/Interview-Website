@@ -1,89 +1,153 @@
 {
-    "Web Development": {
-      "easy": [
-        {
-          "id": "web-e-1",
-          "scenario": "The candidate claims 3 years of React experience. Ask them to explain how they handle state across a medium-sized app with forms and API calls.",
-          "candidate": "I usually put most of my state in one big context and pass it down. For forms I use setState for everything because it's straightforward. For API, I fetch in components and set state directly.",
-          "time": 60
-        },
-        {
-          "id": "web-e-2",
-          "scenario": "They say they’re comfortable with responsive design. Ask for their process to make a new landing page responsive.",
-          "candidate": "I use a lot of media queries and try things until it looks okay on my phone and laptop. I don't usually test tablets.",
-          "time": 60
-        }
-      ],
-      "normal": [
-        {
-          "id": "web-n-1",
-          "scenario": "They’ve built SPAs with routing. Ask how they structure routes and handle protected pages.",
-          "candidate": "I put routes in one file. For protected pages I just check localStorage for a token in the component and redirect if not found.",
-          "time": 55
-        },
-        {
-          "id": "web-n-2",
-          "scenario": "They mention performance optimization. Ask for concrete steps they take to reduce bundle size.",
-          "candidate": "I try to minify and sometimes use lazy loading. I haven't done code splitting much. I also remove console logs before deploy.",
-          "time": 55
-        }
-      ],
-      "hard": [
-        {
-          "id": "web-h-1",
-          "scenario": "They worked with SSR/SSG. Ask when to choose each and implications on caching and data fetching.",
-          "candidate": "I pick SSR when I need fresh data and SSG when I don't. Caching is on the CDN. Data fetching is similar I think.",
-          "time": 45
-        },
-        {
-          "id": "web-h-2",
-          "scenario": "Ask how they’d design a robust form system (validation, async checks, a11y, error recovery).",
-          "candidate": "I'd use a big form library. For a11y I add labels. For async I might just disable the button and hope the API returns fast.",
-          "time": 45
-        }
-      ]
-    },
-  
-    "Data Structures & Algorithms": {
-      "easy": [
-        {
-          "id": "dsa-e-1",
-          "scenario": "Ask them to compare arrays vs linked lists and when to use each.",
-          "candidate": "Arrays are contiguous and fast. Linked lists are slower but flexible. I don't use linked lists much.",
-          "time": 60
-        }
-      ],
-      "normal": [
-        {
-          "id": "dsa-n-1",
-          "scenario": "They solved problems on LeetCode. Ask how they choose between DFS and BFS in graph problems.",
-          "candidate": "DFS is for depth and BFS is for breadth. I usually try DFS first because it's simpler.",
-          "time": 55
-        }
-      ],
-      "hard": [
-        {
-          "id": "dsa-h-1",
-          "scenario": "Ask for time/space tradeoffs of using a heap + hashmap for an LFU cache.",
-          "candidate": "I know LRU better. For LFU I think we need frequency counts. Space gets big but should be fine.",
-          "time": 45
-        }
-      ]
-    },
-  
-    "curveball": [
+  "Web Development": {
+    "easy": [
       {
-        "id": "cb-1",
-        "scenario": "Sudden pivot: You must decide in 30s if the candidate can mentor juniors effectively.",
-        "candidate": "I enjoy pairing but I haven't mentored officially. I like to answer questions on Slack when I have time.",
-        "time": 30
-      },
-      {
-        "id": "cb-2",
-        "scenario": "Critical production bug is live. Can they stay calm and communicate clearly?",
-        "candidate": "I'd first see if I can reproduce it locally and then push a quick fix. I usually DM the manager when I have something.",
-        "time": 30
+        "id": "web-e-1",
+        "scenario": "They claim 3 years of React. Ask how they handle state across a medium-sized app with forms and API calls.",
+        "candidate": "I centralize most state in one context. For forms I rely on setState everywhere. API calls happen inside components.",
+        "time": 60
       }
-    ]
-  }
-      
+    ],
+    "normal": [
+      {
+        "id": "web-n-1",
+        "scenario": "They mention bundle performance. Ask for concrete steps to reduce bundle size.",
+        "candidate": "I minify and sometimes lazy-load. Haven’t done much code splitting; I remove console logs before deploy.",
+        "time": 55
+      }
+    ],
+    "hard": []
+  },
+
+  "Data Science": {
+    "easy": [
+      {
+        "id": "ds-e-1",
+        "scenario": "They talk about exploratory analysis. Ask their typical EDA workflow and pitfalls to avoid.",
+        "candidate": "I start with missing values, distributions, outliers, then correlations. I try not to overfit insights to hypotheses.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Computer Science": {
+    "easy": [
+      {
+        "id": "cs-e-1",
+        "scenario": "They say they know OS basics. Ask how a context switch works conceptually.",
+        "candidate": "The scheduler saves registers/PC of the running process and restores another's state, updating stacks and tables.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Machine Learning": {
+    "easy": [
+      {
+        "id": "ml-e-1",
+        "scenario": "They trained classifiers. Ask how they'd detect overfitting and fix it.",
+        "candidate": "I check train vs validation curves, use regularization, data augmentation, and early stopping.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Networking": {
+    "easy": [
+      {
+        "id": "net-e-1",
+        "scenario": "They debugged HTTP issues. Ask how they'd diagnose intermittent 502 errors.",
+        "candidate": "I check upstream timeouts, load balancer health checks, app logs, and connection pool exhaustion.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Cyber Security": {
+    "easy": [
+      {
+        "id": "sec-e-1",
+        "scenario": "They performed security reviews. Ask common web vulns and practical mitigations.",
+        "candidate": "XSS (escape + CSP), CSRF (tokens + same-site), SQLi (parameterized queries), auth flaws (MFA, lockouts).",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Software Engineering": {
+    "easy": [
+      {
+        "id": "se-e-1",
+        "scenario": "They worked on teams. Ask their approach to code reviews that actually improve quality.",
+        "candidate": "I focus on correctness, tests, readability, and actionable suggestions with examples.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Cloud Computing": {
+    "easy": [
+      {
+        "id": "cloud-e-1",
+        "scenario": "They deployed to the cloud. Ask how they'd design blue/green deployment with safe rollbacks.",
+        "candidate": "Two identical environments behind LB, shift traffic gradually, health checks, and quick revert on issues.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Mobile App Development": {
+    "easy": [
+      {
+        "id": "mob-e-1",
+        "scenario": "They built apps with offline mode. Ask how they'd handle sync conflicts.",
+        "candidate": "Use conflict resolution strategies like last-write-wins or CRDTs; show diffs to users when needed.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "Database Management": {
+    "easy": [
+      {
+        "id": "db-e-1",
+        "scenario": "They optimized queries. Ask how they'd diagnose a slow SELECT on a big table.",
+        "candidate": "I EXPLAIN the plan, add proper indexes, check filters/sorts vs indexes, and watch for N+1 patterns.",
+        "time": 60
+      }
+    ],
+    "normal": [],
+    "hard": []
+  },
+
+  "curveball": [
+    {
+      "id": "cb-1",
+      "scenario": "Your team lost a day's work due to a bad merge. What do you do in the next 30 minutes?",
+      "candidate": "Stabilize: freeze deploys, communicate, identify last known good, restore, then document and add safeguards.",
+      "time": 30
+    },
+    {
+      "id": "cb-2",
+      "scenario": "You shipped a bug to production. How will you communicate with stakeholders while fixing it?",
+      "candidate": "Provide clear impact, ETA, workaround, and regular updates; avoid speculation; do a postmortem later.",
+      "time": 30
+    }
+  ]
+}
